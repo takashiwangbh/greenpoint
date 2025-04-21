@@ -1,0 +1,30 @@
+name: Daily Diary
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天 UTC 0 点执行（东京时间 9 点）
+  workflow_dispatch:     # 也支持手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Generate diary
+        run: python generate_diary.py
+
+      - name: Commit and push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "📌 自动更新每日小日记" || echo "No changes"
+          git push
