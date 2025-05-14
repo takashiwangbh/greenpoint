@@ -26,5 +26,5 @@ jobs:
           git config --global user.name "takashiwangbh"
           git config --global user.email "takashiwangbh@gmail.com"
           git add README.md
-          git commit -m "📌 自动更新每日小日记" || echo "No changes"
+          git commit -m "update" || echo "No changes"
           git push
